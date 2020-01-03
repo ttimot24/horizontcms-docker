@@ -9,7 +9,7 @@ RUN apt-get update -yqq && \
     php -r "if (hash_file('SHA384', 'composer-setup.php') === '$HASH') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
 
 
-RUN mysql -uroot -e "CREATE DATABASE horizontcms"
+RUN service mysql start && mysql -uroot -e "CREATE DATABASE horizontcms"
 
 RUN cd /app && git clone https://github.com/ttimot24/HorizontCMS.git && \
     cd HorizontCMS && composer install && \
