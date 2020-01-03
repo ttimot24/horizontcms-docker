@@ -8,11 +8,11 @@ RUN apt-get update -yqq && \
     curl -sS https://getcomposer.org/installer -o composer-setup.php && \
     php -r "if (hash_file('SHA384', 'composer-setup.php') === '$HASH') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
 
-
-RUN service mysql start && mysql -uroot -e "CREATE DATABASE horizontcms"
-
 RUN cd /app && git clone https://github.com/ttimot24/HorizontCMS.git && \
-    cd HorizontCMS && composer install && \
-    php artisan migrate --no-interaction --force && \
+    cd HorizontCMS && composer install
+   
+CMD service mysql start && mysql -uroot -e "CREATE DATABASE IF NOT EXISTS horizontcms"
+
+CMD php artisan migrate --no-interaction --force && \
     php artisan db:seed --no-interaction --force && \
     php artisan hcms:user --create-admin --name=Administrator --email=admin@admin.com --username=admin --passsword=admin
