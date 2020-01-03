@@ -13,6 +13,7 @@ RUN cd /app && git clone https://github.com/ttimot24/HorizontCMS.git && \
    
 CMD service mysql start && mysql -uroot -e "CREATE DATABASE IF NOT EXISTS horizontcms"
 
-CMD php artisan migrate --no-interaction --force && \
+CMD cd /app/HorizontCMS && \
+    php artisan migrate --no-interaction --force && \
     php artisan db:seed --no-interaction --force && \
     php artisan hcms:user --create-admin --name=Administrator --email=admin@admin.com --username=admin --passsword=admin
