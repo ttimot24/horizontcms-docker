@@ -18,6 +18,8 @@ VOLUME  ["/etc/mysql", "/var/lib/mysql", "/app" ]
 EXPOSE 80 3306
 CMD ["/run.sh"] 
 
+CMD ls -l
+
 CMD cd /app/HorizontCMS && \
     php artisan migrate --no-interaction --force && \
     php artisan db:seed --no-interaction --force && \
