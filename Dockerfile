@@ -13,6 +13,11 @@ RUN cd /app && git clone https://github.com/ttimot24/HorizontCMS.git && \
    
 CMD service mysql start && mysql -uroot -e "CREATE DATABASE IF NOT EXISTS horizontcms"
 
+VOLUME  ["/etc/mysql", "/var/lib/mysql", "/app" ]
+
+EXPOSE 80 3306
+CMD ["/run.sh"] 
+
 CMD cd /app/HorizontCMS && \
     php artisan migrate --no-interaction --force && \
     php artisan db:seed --no-interaction --force && \
